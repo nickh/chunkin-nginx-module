@@ -301,9 +301,12 @@ ngx_http_chunkin_resume_handler(ngx_http_request_t *r) {
 
     if (!conf->enabled || r != r->main
             || (r->method != NGX_HTTP_PUT && r->method != NGX_HTTP_POST &&
+                r->method != NGX_HTTP_OPTIONS && r->method != NGX_HTTP_PROPFIND &&
+                r->method != NGX_HTTP_PROPPATCH && r->method != NGX_HTTP_REPORT &&
+                r->method != NGX_HTTP_CHECKOUT && r->method != NGX_HTTP_MERGE &&
                 r->method != NGX_HTTP_DELETE))
     {
-        dd("conf not enabled or in subrequest or not POST nor PUT requests");
+        dd("conf not enabled or in subrequest or not allowed request method");
 
         return NGX_HTTP_LENGTH_REQUIRED;
     }
